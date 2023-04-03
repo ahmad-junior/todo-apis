@@ -17,9 +17,22 @@ After cloning the repository, you need to install the required packages. You can
 
 > **Note** : You need to be in the project directory to run the above command.
 
-> **Important Note:** I can't commit the .env file because it contains the database credentials. So, you need to create a .env file in the project directory and add the following variables to it:
+> **Important Note** : I can't commit the .env file because it contains the database credentials. So, you need to create a .env file in the project directory and add the following variables to it:
+
+## Environment Variables
+I have used the following environment variables in this project:
 
 ```PORT=_your_port_number_```
+
+```DB_HOST=_your_db_host_```
+
+```DB_USER=_your_db_user_```
+
+```DB_PASSWORD=_your_db_password_```
+
+```DB_NAME=_your_db_name_```
+
+So, you need to add the above variables to the .env file. You can set any values to the variables. But, you need to use the same variable names in the .env file.
 
 ## Running the Project
 After installing the required packages, you can run the project by using the following command:
