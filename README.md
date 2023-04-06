@@ -10,12 +10,44 @@ To install this project, you need to have MySQL and Redis installed on your comp
 
 After installing MySQL and Redis, you can create a database and a table for this project. You can use the following command to create a database:
 
+## MySQL
+
 ```$ CREATE DATABASE todo_list;```
 ```$ USE todo_list;```
 
 Then, you can use the following command to create a table:
 
 ```$ CREATE TABLE users (userName varchar(255) NOT NULL, fullName varchar(100) NOT NULL, userPassword varchar(255) NOT NULL, userEmail varchar(255) NOT NULL, isVerified boolean DEFAULT FALSE, PRIMARY KEY(userName), UNIQUE KEY `userName` (`userName`));```
+
+## Redis
+After installing Redis, you can start the Redis server by using the following command:
+
+```$ redis-server```
+```$ redis-cli```
+
+In redis-cli, you can work with redis database. It's the command line interface for Redis. You can use the following command to check the redis server is running or not:
+
+```$ ping```
+
+If the redis server is running, you will get the following response:
+
+```PONG```
+
+But by the way it's not recommended to use the redis-cli for production. You can use the redis-cli for development purpose only.
+
+## Redis Commnader
+Redis commander is a web based UI for Redis. You can use the following command to install redis commander:
+
+```$ npm install -g redis-commander```
+
+After installing redis commander, you can start the redis commander by using the following command:
+
+```$ redis-commander```
+
+Then, you can open the browser and go to the following URL:
+
+```http://localhost:8081```
+or the port number you have set in the redis commander. But if mostly the redis commander prints the lik on the terminal. You can use the link to open the redis commander.
 
 # Installation Node.js and npm
 To install this project, you need to have Node.js and npm installed on your computer. You can download Node.js from [here](https://nodejs.org/en/download/). Most of the time, npm comes with Node.js. If not, you can download it from [here](https://www.npmjs.com/get-npm). If you are the Mac or Linux users and you have to install the npm separately. You can use the following command to install npm:
