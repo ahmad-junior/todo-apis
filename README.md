@@ -78,6 +78,8 @@ I have used the following environment variables in this project:
 
 ```DB_PASSWORD=_your_db_password_```
 
+```DB_NAME=_your_db_name_```
+
 ```SECRET_KEY_TOKEN=_your_secret_key_token_```
 
 ```SECRET_KEY_REFRESH=_your_secret_key_refresh_token```
@@ -89,6 +91,8 @@ I have used the following environment variables in this project:
 ```EXP_TOKEN=_your_exp_time_token_```
 
 ```EXP_REFRESH=_your_exp_time_refresh_token_```
+
+```LOG_FILE_NAME=logs.log```
 
 So, you need to add the above variables to the .env file. You can set any values to the variables. But, you need to use the same variable names in the .env file.
 

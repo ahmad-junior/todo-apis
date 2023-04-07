@@ -11,7 +11,7 @@ export default {
             const pyaload = {}
             const secrect_key = process.env.SECRET_KEY_TOKEN;
             const options = {
-                expiresIn:`${process.env.EXP_TOKEN}s`.toString(),
+                expiresIn: `${process.env.EXP_TOKEN}s`.toString(),
                 issuer: 'todo_apis',
                 audience: userId
             }
@@ -20,6 +20,8 @@ export default {
             JWT.sign(pyaload, secrect_key, options, (err, token) => {
                 if (err) {
                     reject(err);
+                    // Write the error into the log file
+                    utils.writeErrorToLog(err);
                 } else {
                     resolve(token);
                 }
@@ -32,6 +34,8 @@ export default {
             JWT.verify(token, secrect_key, (err, payload) => {
                 if (err) {
                     reject(err);
+                    // Write the error into the log file
+                    utils.writeErrorToLog(err);
                 } else {
                     resolve(payload);
                 }
@@ -53,7 +57,8 @@ export default {
             JWT.sign(pyaload, secrect_key, options, (err, token) => {
                 if (err) {
                     reject(err);
-                    console.log(err);
+                    // Write the error into the log file
+                    utils.writeErrorToLog(err);
                     return;
                 }
 
@@ -61,15 +66,16 @@ export default {
                     client.SETEX(userId, process.env.EXP_REFRESH, token, (err, reply) => {
                         if (err) {
                             reject(err);
-                            console.log(err);
+                            // Write the error into the log file
+                            utils.writeErrorToLog(err);
                             return;
                         }
-                        console.log(reply);
                     });
                     resolve(token);
                 } catch (error) {
                     reject(error);
-                    console.log(error);
+                    // Write the error into the log file
+                    utils.writeErrorToLog(err);
                 }
             });
         });
@@ -87,6 +93,8 @@ export default {
             JWT.verify(token, secrect_key, (err, payload) => {
                 if (err) {
                     reject(err);
+                    // Write the error into the log file
+                    utils.writeErrorToLog(err);
                 } else {
                     resolve(payload);
                 }
@@ -98,6 +106,8 @@ export default {
             bcrypt.hash(password, 10, (err, hash) => {
                 if (err) {
                     reject(err);
+                    // Write the error into the log file
+                    utils.writeErrorToLog(err);
                 } else {
                     resolve(hash);
                 }
@@ -109,6 +119,8 @@ export default {
             bcrypt.compare(password, hash, (err, result) => {
                 if (err) {
                     reject(err);
+                    // Write the error into the log file
+                    utils.writeErrorToLog(err);
                 } else {
                     resolve(result);
                 }
@@ -119,14 +131,15 @@ export default {
         try {
             client.DEL(userName, (err, reply) => {
                 if (err) {
-                    console.log(err);
+                    // Write the error into the log file
+                    utils.writeErrorToLog(err);
                     return;
                 }
-                console.log(reply);
             });
         }
         catch (error) {
-            console.log(error);
+            // Write the error into the log file
+            utils.writeErrorToLog(error);
         }
     }
 }
