@@ -10,13 +10,7 @@ export default {
 
         // Check if the user is already in the database
         try {
-            const sqlCheck = "SELECT * FROM users WHERE userName = ? OR userEmail = ?";
-            const valuesCheck = [req.body.userName.toLowerCase(), req.body.userEmail.toLowerCase()];
-
-            // Insert if the user not exists
-            const sqlInsert = "INSERT INTO users (userName, fullName, userPassword, userEmail) VALUES (?, ?, ?, ?)";
-            const password = await accountUtils.hashPassword(req.body.userPassword);
-            const valuesInsert = [req.body.userName.toLowerCase(), req.body.fullName.toUpperCase(), password, req.body.userEmail.toLowerCase()];
+            const values = [req.body.userName.toLowerCase(), req.body.fullName.toUpperCase(), req.body.userPassword.toLowerCase(), req.body.userEmail.toLowerCase()];
         } catch (error) {
             // Write the error into the log file
             utils.writeErrorToLog(error);
@@ -25,6 +19,14 @@ export default {
         }
 
         try {
+            const sqlCheck = "SELECT * FROM users WHERE userName = ? OR userEmail = ?";
+            const valuesCheck = [req.body.userName.toLowerCase(), req.body.userEmail.toLowerCase()];
+
+            // Insert if the user not exists
+            const sqlInsert = "INSERT INTO users (userName, fullName, userPassword, userEmail) VALUES (?, ?, ?, ?)";
+            const password = await accountUtils.hashPassword(req.body.userPassword);
+            const valuesInsert = [req.body.userName.toLowerCase(), req.body.fullName.toUpperCase(), password, req.body.userEmail.toLowerCase()];
+
             const token = await accountUtils.generateAccessToken(req.body.userName.toLowerCase());
             const resfreshToken = await accountUtils.generateRefreshToken(req.body.userName.toLowerCase());
 
@@ -62,6 +64,9 @@ export default {
                     }
                 }
             });
+
+            // Create user Table in database
+            utils.createUserTable(req.body.userName.toLowerCase());
         } catch (error) {
             res.status(500).json({ message: "Internal Server Error!" });
         }
@@ -78,7 +83,7 @@ export default {
             connection.query(sqlCheck, valuesCheck, async (err, result) => {
                 if (err) {
                     // Write the error into the log file
-                    utils.writeErrorToLog(error);
+                    utils.writeErrorToLog(err);
                     res.status(500).json({ message: "Internal Server Error!" });
                 } else {
                     if (result.length > 0) {
@@ -88,8 +93,8 @@ export default {
 
                         // Check if the password is correct
                         const password = result[0].userPassword;
-                        const isPasswordCorrect = accountUtils.comparePassword(req.body.userPassword, password);
-
+                        const isPasswordCorrect = await accountUtils.comparePassword(req.body.userPassword, password);
+                        
                         if (isPasswordCorrect) {
                             res.send({
                                 access_token: token,

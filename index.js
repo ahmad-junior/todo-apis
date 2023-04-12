@@ -8,6 +8,7 @@ dotenv.config();
 
 // Importing the routes
 import accountRoutes from './src/routes/account.js';
+import todoRoutes from './src/routes/todo.js';
 
 // Database connections
 import './src/config/connect_db.js'
@@ -26,6 +27,7 @@ app.use(morgan('dev'));
 
 // Setting up the routes
 app.use('/api', accountRoutes);
+app.use('/api', todoRoutes);
 
 // Setting up the server
 const server = createServer(app);
