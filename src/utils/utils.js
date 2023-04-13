@@ -8,6 +8,12 @@ const writeErrorToLog = (error) => {
 
     // Create the log file if not exists
     if (!fs.existsSync(logPath)) {
+        // Create folder if doesn't exists
+        if (!fs.existsSync(path.join(`${process.cwd()}/src/logs`))) {
+            fs.mkdirSync(path.join(`${process.cwd()}/src/logs`));
+        }
+
+        // Create log file
         fs.writeFileSync(logPath, "");
     }
 
